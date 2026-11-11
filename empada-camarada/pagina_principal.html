@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empada Camarada</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#e6cfab;color:#30190f}
+.banner{background-image:url("imagens/01_banner_empadas.jpg");background-size:cover;background-position:center;background-repeat:no-repeat;min-height:380px;display:flex;align-items:center;padding:30px 4%}
+.banner-conteudo{max-width:500px;color:white}
+.banner h1{color:#ffc629;font-size:64px;line-height:.95;margin:0 0 15px;font-weight:bold}
+.banner h2{font-size:28px;line-height:1.15;margin:0 0 15px}
+.banner p{font-size:16px;line-height:1.5;margin:0}
+.navegacao{background:#30190f;display:flex;justify-content:center;gap:12px;padding:12px 15px;position:sticky;top:0;z-index:10}
+.aba{border:2px solid transparent;border-radius:6px;background:transparent;color:white;padding:11px 22px;font-size:16px;font-weight:bold;cursor:pointer;transition:.2s}
+.aba:hover,.aba.ativa{background:#ffc629;color:#30190f}
+.pagina{display:none}.pagina.ativa{display:block}
+.conteudo-secao{background:#e6cfab;padding:30px;text-align:center;min-height:300px}
+.conteudo-secao h2{color:#30190f;font-family:"Trebuchet MS",Arial,sans-serif;font-size:38px;font-style:italic;margin:0 0 10px}
+.subtitulo{color:#38291f;font-size:18px;margin:0 0 25px}
+.equipe-imagem{display:block;width:min(700px,100%);max-height:390px;object-fit:cover;margin:25px auto 0;border-radius:12px;box-shadow:0 4px 14px rgba(48,25,15,.18)}
+.lista-empadas{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;max-width:1400px;margin:0 auto}
+.empada{display:flex;flex-direction:column;align-items:stretch;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:#fff;color:#30190f;font-family:Arial,sans-serif;transition:transform .2s,border-color .2s,box-shadow .2s}
+.empada img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.nome-empada{background:#30190f;color:white;font-size:16px;font-weight:bold;padding:12px 4px;min-height:44px;display:flex;justify-content:center;align-items:center}
+.preco-empada{font-size:17px;font-weight:bold;color:#70411f;padding:12px 4px 5px}
+.status-estoque{display:block;font-weight:bold;color:#28652a;min-height:20px;padding:4px 3px}.status-estoque.esgotado{color:#b00020}
+.seletor-quantidade{display:flex;flex-direction:column;gap:6px;padding:8px 10px 13px;font-size:14px;font-weight:bold}
+.seletor-quantidade input{width:100%;padding:8px;border:1px solid #c8b49a;border-radius:5px;text-align:center;font-size:16px}
+.seletor-quantidade input:focus,.campo-pedido input:focus,.campo-pedido textarea:focus{outline:2px solid #dca91d;border-color:#dca91d}
+.empada:focus-within{border-color:#eeb82c;box-shadow:0 5px 14px rgba(48,25,15,.18)}
+.dados-pedido{max-width:650px;margin:35px auto 0;padding:25px;background:#f7f0e5;border-radius:10px;text-align:left;box-shadow:0 3px 12px rgba(48,25,15,.10)}
+.dados-pedido h3{margin:0 0 18px;text-align:center;color:#30190f;font-size:24px}
+.campo-pedido{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;font-weight:bold}
+.campo-pedido input,.campo-pedido textarea{width:100%;padding:12px;border:1px solid #c8b49a;border-radius:5px;font-family:Arial,sans-serif;font-size:15px}
+.campo-pedido textarea{min-height:80px;resize:vertical}
+.botao-confirmar{display:block;width:100%;padding:14px;border:0;border-radius:6px;background:#30190f;color:white;font-size:17px;font-weight:bold;cursor:pointer}
+.botao-confirmar:hover{background:#70411f}
+.cartao-contato{max-width:650px;margin:25px auto;padding:30px;background:#f7f0e5;border-radius:10px;box-shadow:0 3px 12px rgba(48,25,15,.10);font-size:18px;line-height:1.8}
+.cartao-contato p{margin:12px 0}
+footer{background:#30190f;color:white;text-align:center;padding:20px;font-size:14px}
+@media(max-width:1000px){.lista-empadas{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){
+.banner{min-height:420px;background-position:60% center;padding:25px 20px}
+.banner-conteudo{max-width:75%}.banner h1{font-size:42px}.banner h2{font-size:21px}.banner p{font-size:14px}
+.navegacao{gap:4px;padding:8px 5px}.aba{padding:10px 9px;font-size:13px}
+.conteudo-secao{padding:25px 15px}.conteudo-secao h2{font-size:30px}.subtitulo{font-size:15px}
+.lista-empadas{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.nome-empada{font-size:14px}.preco-empada{font-size:16px}.dados-pedido{padding:18px}
+}
+</style>
+</head>
+
+
+
+
+
+
+
+<body>
+<header class="banner">
+ <div class="banner-conteudo">
+  <h1>Empada<br>Camarada</h1>
+  <h2>Sabor e qualidade em cada mordida!</h2>
+  <p>Empadas artesanais, feitas com ingredientes selecionados e muito carinho. Peça agora e receba no conforto da sua casa!</p>
+ </div>
+</header>
+
+<nav class="navegacao">
+ <button type="button" class="aba ativa" onclick="trocarPagina('inicio',this)">Início</button>
+ <button type="button" class="aba" onclick="trocarPagina('menu',this)">Menu</button>
+ <button type="button" class="aba" onclick="trocarPagina('contato',this)">Contato e pedidos</button>
+</nav>
+
+<main>
+ <section id="inicio" class="pagina ativa conteudo-secao">
+  <h2>Nosso time de cozinheiros</h2>
+  <p class="subtitulo">Uma equipe dedicada a preparar empadas deliciosas para você!</p>
+  <!-- Salve a foto da equipe como imagens/equipe_cozinheiros.jpg -->
+  <img class="equipe-imagem" src="imagens/equipe_cozinheiros.jpg" alt="Equipe de cozinheiros da Empada Camarada">
+ </section>
+
+ <section id="menu" class="pagina conteudo-secao">
+  <h2>Nossos Sabores</h2>
+  <p class="subtitulo">Escolha seus favoritos e informe a quantidade desejada. As quantidades disponíveis são atualizadas conforme o estoque.</p>
+
+  <!-- Formulário preparado para receber os dados pelo PHP -->
+  <form action="salvar_pedido.php" method="POST">
+   <div class="lista-empadas">
+    <div class="empada">
+     <img src="imagens/02_empada_queijo.jpg" alt="Empada de queijo">
+     <span class="nome-empada">Queijo</span><span class="preco-empada">R$ 6,50</span>
+     <span class="status-estoque" id="status-queijo" aria-live="polite">Carregando estoque...</span>
+      <label class="seletor-quantidade">Quantidade<input type="number" name="quantidade[queijo]" min="0" max="0" value="0" data-sabor="queijo" disabled></label>
+    </div>
+    <div class="empada">
+     <img src="imagens/03_empada_frango.jpg" alt="Empada de frango">
+     <span class="nome-empada">Frango</span><span class="preco-empada">R$ 7,50</span>
+     <span class="status-estoque" id="status-frango" aria-live="polite">Carregando estoque...</span>
+      <label class="seletor-quantidade">Quantidade<input type="number" name="quantidade[frango]" min="0" max="0" value="0" data-sabor="frango" disabled></label>
+    </div>
+    <div class="empada">
+     <img src="imagens/04_empada_carne_seca.jpg" alt="Empada de carne seca">
+     <span class="nome-empada">Carne Seca</span><span class="preco-empada">R$ 8,50</span>
+     <span class="status-estoque" id="status-carne_seca" aria-live="polite">Carregando estoque...</span>
+      <label class="seletor-quantidade">Quantidade<input type="number" name="quantidade[carne_seca]" min="0" max="0" value="0" data-sabor="carne_seca" disabled></label>
+    </div>
+    <div class="empada">
+     <img src="imagens/05_empada_camarao.jpg" alt="Empada de camarão">
+     <span class="nome-empada">Camarão</span><span class="preco-empada">R$ 10,50</span>
+     <span class="status-estoque" id="status-camarao" aria-live="polite">Carregando estoque...</span>
+      <label class="seletor-quantidade">Quantidade<input type="number" name="quantidade[camarao]" min="0" max="0" value="0" data-sabor="camarao" disabled></label>
+    </div>
+    <div class="empada">
+     <img src="imagens/06_empada_romeu_e_julieta.jpg" alt="Empada Romeu e Julieta">
+     <span class="nome-empada">Romeu e Julieta</span><span class="preco-empada">R$ 7,00</span>
+     <span class="status-estoque" id="status-romeu_julieta" aria-live="polite">Carregando estoque...</span>
+      <label class="seletor-quantidade">Quantidade<input type="number" name="quantidade[romeu_julieta]" min="0" max="0" value="0" data-sabor="romeu_julieta" disabled></label>
+    </div>
+    <div class="empada">
+     <img src="imagens/07_empada_chocolate.jpg" alt="Empada de chocolate">
+     <span class="nome-empada">Chocolate</span><span class="preco-empada">R$ 7,00</span>
+     <span class="status-estoque" id="status-chocolate" aria-live="polite">Carregando estoque...</span>
+      <label class="seletor-quantidade">Quantidade<input type="number" name="quantidade[chocolate]" min="0" max="0" value="0" data-sabor="chocolate" disabled></label>
+    </div>
+   </div>
+
+   <div class="dados-pedido">
+    <h3>Dados para o pedido</h3>
+    <label class="campo-pedido">Nome completo:
+     <input type="text" name="nome" placeholder="Digite seu nome" required>
+    </label>
+    <label class="campo-pedido">Endereço de entrega:
+     <textarea name="endereco" placeholder="Digite seu endereço completo" required></textarea>
+    </label>
+    <button type="submit" class="botao-confirmar">Confirmar pedido</button>
+   </div>
+  </form>
+ </section>
+
+ <section id="contato" class="pagina conteudo-secao">
+  <h2>Contato e pedidos</h2>
+  <p class="subtitulo">Entre em contato com a Empada Camarada!</p>
+  <div class="cartao-contato">
+   <p><strong>Telefone:</strong> (21) 99999-9999</p>
+   <p><strong>E-mail:</strong> contato@empadacamarada.com.br</p>
+   <p><strong>Atendimento:</strong><br>Segunda a sábado, das 9h às 18h.</p>
+  </div>
+ </section>
+</main>
+
+<footer>Empada Camarada &nbsp; • &nbsp; Sabor que chega até você!</footer>
+
+<script>
+function trocarPagina(idPagina, botaoClicado) {
+ document.querySelectorAll(".pagina").forEach(function(pagina) {
+  pagina.classList.remove("ativa");
+ });
+ document.querySelectorAll(".aba").forEach(function(aba) {
+  aba.classList.remove("ativa");
+ });
+ document.getElementById(idPagina).classList.add("ativa");
+ botaoClicado.classList.add("ativa");
+ window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+async function atualizarEstoque() {
+ const campos = document.querySelectorAll('input[data-sabor]');
+ try {
+  const resposta = await fetch('estoque.php?acao=lista', {headers: {'Accept': 'application/json'}});
+  const dados = await resposta.json();
+  if (!resposta.ok || !dados.sucesso) throw new Error(dados.mensagem || 'Não foi possível consultar o estoque.');
+  campos.forEach(function(campo) {
+   const sabor = campo.dataset.sabor;
+   const quantidade = Number(dados.estoque[sabor] ?? 0);
+   const status = document.getElementById('status-' + sabor);
+   campo.max = String(quantidade);
+   campo.disabled = quantidade <= 0;
+   if (Number(campo.value) > quantidade) campo.value = String(quantidade);
+   status.textContent = quantidade <= 0 ? 'Esgotado' : 'Em estoque: ' + quantidade;
+   status.classList.toggle('esgotado', quantidade <= 0);
+  });
+ } catch (erro) {
+  campos.forEach(function(campo) { campo.disabled = true; });
+  document.querySelectorAll('.status-estoque').forEach(function(el) {
+   el.textContent = 'Estoque indisponível';
+   el.classList.add('esgotado');
+  });
+  console.error(erro);
+ }
+}
+document.addEventListener('DOMContentLoaded', atualizarEstoque);
+</script>
+</body>
+</html>

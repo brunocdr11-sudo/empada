@@ -1,0 +1,22 @@
+EMPADA CAMARADA — instalação local
+
+Arquivos:
+- pagina_principal.html: página do site alterada para consultar estoque em estoque.php?acao=lista.
+- conexao.php: conexão PDO com localhost:3306 e teste de conexão.
+- salvar_pedido.php: grava pedidos e itens, valida entradas e baixa o estoque em transação.
+- estoque.php: interface simples de controle de estoque e endpoint JSON de leitura.
+- banco.sql: cria banco, tabelas e usuário MySQL admin solicitado.
+
+Instalação:
+1. Coloque todos os arquivos PHP e pagina_principal.html na mesma pasta pública do servidor PHP (por exemplo, htdocs/empada-camarada no XAMPP).
+2. Abra o phpMyAdmin ou MySQL Workbench como administrador do MySQL e execute banco.sql.
+   Se o MySQL já tiver um usuário admin@localhost com outra senha, ajuste a senha no MySQL ou em conexao.php.
+3. Inicie Apache/PHP e MySQL. A porta MySQL configurada é 3306.
+4. Abra a página por HTTP, por exemplo http://localhost/empada-camarada/pagina_principal.html. Não abra o HTML por file://.
+5. Acesse estoque.php e defina as quantidades disponíveis. O estoque inicial é zero para todos os sabores.
+6. Abra conexao.php para ver a mensagem de conexão bem-sucedida ou o aviso de falha.
+
+Notas:
+- Os preços estão sendo definidos no PHP, não nos campos enviados pelo navegador.
+- A interface de estoque não foi feita com login administrativo.
+- O usuário admin/1234abcd está exposto. Segundo aprendido, essa pratica deve ser modificada para obter melhor segurança.
